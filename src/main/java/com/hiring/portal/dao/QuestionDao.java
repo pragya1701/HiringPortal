@@ -11,6 +11,7 @@ import com.hiring.portal.model.UserResponse;
 
 public interface QuestionDao {
 	
+	/* -- Creation and retrieval of questions -- */
 	Question getQues(Long id);
 	
 	List<Question> getAllQues();
@@ -27,6 +28,8 @@ public interface QuestionDao {
 	
 	List<McqQuestion> getMcqQuestion(Long testid);
 	
+	
+	/* -- Saving and Evaluating User Response -- */
 	void addUserResponse(UserResponse r);
 	
 	boolean checkresult(UserMarks m);
