@@ -218,7 +218,8 @@ div.container2 {
 
 
 </head>
-<body onload="StartTimers(); loadcorddetails(); return showTestHistory();"
+<body
+	onload="StartTimers(); loadcorddetails(); return showTestHistory();"
 	onmousemove="ResetTimers();">
 	<div id="wrapper">
 		<!-- Sidebar -->
@@ -235,9 +236,12 @@ div.container2 {
 	</div>
 
 	<div class="container1">
+		<button
+			onclick="window.location.href = 'http://localhost:3030/evaluate'"
+			name="click">click</button>
 		<h3>Test History</h3>
 		<h4>Completed Tests</h4>
-		<ul class="list-group" id="testcomp" onClick="checkBox()">
+		<ul class="list-group" id="testcomp">
 		</ul>
 		<h4>Running Tests</h4>
 		<ul class="list-group" id="testcurr" onClick="checkBoxWithoutMarks()">
@@ -251,7 +255,8 @@ div.container2 {
 		<div class="sidebar">
 			<br> <br>
 			<ul>
-				<li><a href="cordinit"><i class="fa fa-fw fa-home"></i> Home</a></li>
+				<li><a href="cordinit"><i class="fa fa-fw fa-home"></i>
+						Home</a></li>
 				<li><a href="contactus"><i class="fa fa-fw fa-envelope"></i>
 						Contact</a></li>
 				<li><a href="login"><i class="fa fa-fw fa-user"></i> Logout
@@ -310,133 +315,172 @@ div.container2 {
 						break;
 
 					}
+					sessionStorage.setItem("test_id", globaldata[i].tid);
+					sessionStorage.setItem("test_start",
+							globaldata[i].startdate);
+					sessionStorage.setItem("test_end", globaldata[i].enddate);
+					sessionStorage.setItem("cord_id", globaldata[i].cordid);
+
 				});
 	</script>
 </body>
 </html>
 <script>
+	var globaldata = null;
+	function checkBox() {
+		var testid = document.querySelector('input[name="cbox"]:checked').id;
+		sessionStorage.setItem("testid", testid);
+		sessionStorage.setItem("marks", "1");
+		window.location.href = "cordtestdisplay";
+	}
 
-var globaldata = null;
-function checkBox() {
-	var testid = document.querySelector('input[name="cbox"]:checked').id;
-	sessionStorage.setItem("testid",testid);
-	sessionStorage.setItem("marks","1");
-	window.location.href = "cordtestdisplay";
-}
+	function checkBoxWithoutMarks() {
+		var testid = document.querySelector('input[name="cbox"]:checked').id;
+		sessionStorage.setItem("testid", testid);
+		sessionStorage.setItem("marks", "0");
+		window.location.href = "cordtestdisplay";
+	}
 
-function checkBoxWithoutMarks() {
-	var testid = document.querySelector('input[name="cbox"]:checked').id;
-	sessionStorage.setItem("testid",testid);
-	sessionStorage.setItem("marks","0");
-	window.location.href = "cordtestdisplay";
-}
+	function showTestHistory() {
+		console.log("inside Show Test");
+		var isvalidate = true;
+		var cordid = sessionStorage.getItem("cordid");
+		if (isvalidate) {
+			$(document)
+					.ready(
+							function() {
+								$
+										.getJSON(
+												"http://localhost:3000/api/gettesthistory/"
+														+ cordid,
+												function(json) {
+													globaldata = json;
+													$("#testcomp").empty();
+													$("#testcurr").empty();
+													$("#testpend").empty();
 
+													var testcomp = $("#testcomp");
+													var testcurr = $("#testcurr");
+													var testpend = $("#testpend");
 
-function showTestHistory() {
-	console.log("inside Show Test");
-	   var isvalidate = true;
-	   var cordid = sessionStorage.getItem("cordid");
-	   if (isvalidate) {
-	        $(document)
-	            .ready(
-	                function() {
-	                    $
-	                        .getJSON(
-	                            "http://localhost:3000/api/gettesthistory/" + cordid,
-	                            function(json) {
-	                            	globaldata = json;
-	                                $("#testcomp").empty();
-	                                $("#testcurr").empty();
-	                                $("#testpend").empty();
-	                                
-	                                var testcomp = $("#testcomp");
-	                                var testcurr = $("#testcurr");
-	                                var testpend = $("#testpend");
-	                                
-	                                for (var i = 0; i < json.length; i++) {
-	                                    if(json[i].cordFlag == 0){
-	                                    	testcomp
-	                                        .append("<li class='list-group-item'"+ json[i].tid +"><ul role='listbox' tabindex='0' aria-label='email list'>" +
-	                                            json[i].tname + "<input type='button' style='margin-left:250px' class='btn btn-primary' id='"
-	            								+ json[i].tid
-	            								+ "' value='"+ "View Results" + "' onClick='evaluate("+ i + ")'></li></ul></li>");
-	                                    } else if(json[i].cordFlag == 2) {          	
-	                                    	testpend
-	                                        .append("<li class='list-group-item'"+ json[i].tid +"><ul role='listbox' tabindex='0' aria-label='email list'>" +
-	                                            json[i].tname +
-	                                            "</li></ul></li>");
-	                                    } else {
-	                                    	testcurr
-	                                        .append("<li class='list-group-item'"+ json[i].tid +"><ul role='listbox' tabindex='0' aria-label='email list'><input tabindex='-1' type='checkbox' name='cbox' id='" + json[i].tid + "' value='" + json[i].tid + "'>" +
-	                                            json[i].tname +
-	                                            "</li></ul></li>");
-	                                    }
-	                                 }
-                                    console.log(testcomp);
-                                    console.log(testpend);
-                               
-	                            });
-	                });
-	    }
-}
+													for (var i = 0; i < json.length; i++) {
+														if (json[i].cordFlag == 0) {
+															testcomp
+																	.append("<li class='list-group-item'"+ json[i].tid +"><ul role='listbox' tabindex='0' aria-label='email list'>"
+																			+ json[i].tname
+																			+ "<input type='button' style='margin-left:250px' class='btn btn-primary' id='"
+																			+ json[i].tid
+																			+ "' value='View Results' onClick='eval("+i+")'></li></ul></li>");
+														} else if (json[i].cordFlag == 2) {
+															testpend
+																	.append("<li class='list-group-item'"+ json[i].tid +"><ul role='listbox' tabindex='0' aria-label='email list'>"
+																			+ json[i].tname
+																			+ "</li></ul></li>");
+														} else {
+															testcurr
+																	.append("<li class='list-group-item'"+ json[i].tid +"><ul role='listbox' tabindex='0' aria-label='email list'><input tabindex='-1' type='checkbox' name='cbox' id='" + json[i].tid + "' value='" + json[i].tid + "'>"
+																			+ json[i].tname
+																			+ "</li></ul></li>");
+														}
+													}
+													console.log(testcomp);
+													console.log(testpend);
 
-function evaluate(i){
-	sessionStorage.setItem("test_id",globaldata[i].tid);
-	sessionStorage.setItem("test_start",globaldata[i].startdate);
-	sessionStorage.setItem("test_end",globaldata[i].enddate);
-	sessionStorage.setItem("cord_id",globaldata[i].cordid);
-	
-} 
-var timoutWarning = 840000; // Display warning in 14 Mins.
-var timoutNow = 900000; // Timeout in 15 mins.
-var logoutUrl = 'http://localhost:3000/login'; // URL to logout page.
+												});
+							});
+		}
+	}
 
-var warningTimer;
-var timeoutTimer;
+	function eval(j) {
+		/* sessionStorage.setItem("test_id",globaldata[i].tid);
+		sessionStorage.setItem("test_start",globaldata[i].startdate);
+		sessionStorage.setItem("test_end",globaldata[i].enddate);
+		sessionStorage.setItem("cord_id",globaldata[i].cordid);
 
-// Start timers.
-function StartTimers() {
-    warningTimer = setTimeout(timoutWarning);
-    timeoutTimer = setTimeout("IdleTimeout()", timoutNow);
-}
+		localStorage.setItem("test_id",globaldata[i].tid);
+		localStorage.setItem("test_start",globaldata[i].startdate);
+		localStorage.setItem("test_end",globaldata[i].enddate);
+		localStorage.setItem("cord_id",globaldata[i].cordid);
+		 */
+		
 
-// Reset timers.
-function ResetTimers() {
-    clearTimeout(warningTimer);
-    clearTimeout(timeoutTimer);
-    StartTimers();
-}
+			
+		 document.cookie = "test_id" + "=" + globaldata[j].tid;
+		 document.cookie = "test_start" + "=" + globaldata[j].startdate;
+		 document.cookie = "test_end" + "=" + globaldata[j].enddate;
+		 document.cookie = "cord_id" + "=" + sessionStorage.getItem("cordid");
 
-// Logout the user.
-function IdleTimeout() {
-	alert("Session Timeout.... Please login again");
-    window.location = logoutUrl;
-}
+		 window.location.href = 'http://localhost:3030/evaluate';
 
-function loadcorddetails() {
-	console.log("inside coordinator details");
-	$(document)
-			.ready(
-					function() {
-						var cordid = sessionStorage.getItem("cordid");
-						$
-								.getJSON(
-										"http://localhost:3000/api/getcorddetails/"
-												+ cordid,
-										function(json) {
-											console.log(json);
-											$("#profile").empty();
-											var tr = $("#profile");
-											for (var i = 0; i < json.length; i++) {
-												tr
-														.append("<li class='list-group-item'>  <b>Username:</b> "
-																+ json[i].username
-																+ "</li><li class='list-group-item'>  <b>Phone:</b> "
-																+ json[i].phone
-																+ "</li>");
-												console.log(tr);
-											}
-										});
-					});
-}
+		
+	}
+
+	function getCookie(cname) {
+		var name = cname + "=";
+		var decodedCookie = decodeURIComponent(document.cookie);
+		var ca = decodedCookie.split(';');
+		for (var i = 0; i < ca.length; i++) {
+			var c = ca[i];
+			while (c.charAt(0) == ' ') {
+				c = c.substring(1);
+			}
+			if (c.indexOf(name) == 0) {
+				return c.substring(name.length, c.length);
+			}
+		}
+		return "";
+	}
+
+	var timoutWarning = 840000; // Display warning in 14 Mins.
+	var timoutNow = 900000; // Timeout in 15 mins.
+	var logoutUrl = 'http://localhost:3000/login'; // URL to logout page.
+
+	var warningTimer;
+	var timeoutTimer;
+
+	// Start timers.
+	function StartTimers() {
+		warningTimer = setTimeout(timoutWarning);
+		timeoutTimer = setTimeout("IdleTimeout()", timoutNow);
+	}
+
+	// Reset timers.
+	function ResetTimers() {
+		clearTimeout(warningTimer);
+		clearTimeout(timeoutTimer);
+		StartTimers();
+	}
+
+	// Logout the user.
+	function IdleTimeout() {
+		alert("Session Timeout.... Please login again");
+		window.location = logoutUrl;
+	}
+
+	function loadcorddetails() {
+		console.log("inside coordinator details");
+		$(document)
+				.ready(
+						function() {
+							var cordid = sessionStorage.getItem("cordid");
+							$
+									.getJSON(
+											"http://localhost:3000/api/getcorddetails/"
+													+ cordid,
+											function(json) {
+												console.log(json);
+												$("#profile").empty();
+												var tr = $("#profile");
+												for (var i = 0; i < json.length; i++) {
+													tr
+															.append("<li class='list-group-item'>  <b>Username:</b> "
+																	+ json[i].username
+																	+ "</li><li class='list-group-item'>  <b>Phone:</b> "
+																	+ json[i].phone
+																	+ "</li>");
+													console.log(tr);
+												}
+											});
+						});
+	}
 </script>
