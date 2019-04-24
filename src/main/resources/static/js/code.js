@@ -23,6 +23,12 @@
 					async : false
 				}).responseText);
 
+				if(quesData.length == 0){
+					sessionStorage.setItem("stage_id", 2);
+					localStorage.clear();
+					window.location.href = "successsubmit";
+				}
+				
 				var i = 0;
 				quesData.forEach(function(ques) {
 					$('.sidenav').append(
