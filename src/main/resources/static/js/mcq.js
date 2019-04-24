@@ -22,6 +22,11 @@
 		    async: false
 		}).responseText); 
 		
+		if(quesData.length == 0){
+			sessionStorage.setItem("stage_id",1);
+	        	window.location.href = "coding";
+		}
+		
 		var i=0;
 		quesData.forEach(function(ques) {
 		$('.sidenav').append("<a href='#q" + i + "' id='q" + i + "' onclick='fetch(" + i + ")'>Question "+(i+1)+"</a>"); 
