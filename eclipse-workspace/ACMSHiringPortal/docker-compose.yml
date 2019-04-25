@@ -35,7 +35,7 @@ services:
      #  - db
 
    
-    web1:
+  web1:
     image: crazzycoders/acmsuser:springuser
     restart: always
     ports:
