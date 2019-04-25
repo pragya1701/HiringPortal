@@ -17,16 +17,4 @@ public class AcmsHiringPortalApplication extends SpringBootServletInitializer im
 
 		SpringApplication.run(AcmsHiringPortalApplication.class, args);
 	}
-	@Autowired
-	IAPIService apiservice;
-	@Override
-	public void run(String... args) throws Exception{
-		
-		Coordinator cord = new Coordinator();
-		cord.setUsername("Test");
-		cord.setPassword("Test");
-		cord.setPhone("9033312198");
-		apiservice.doRegister(cord);
-		System.out.println("Admin Logged in");
-	}
 }
