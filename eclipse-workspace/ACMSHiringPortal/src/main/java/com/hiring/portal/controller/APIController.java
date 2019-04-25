@@ -36,7 +36,7 @@ public class APIController {
 	 * coordinator from username
 	 ************************************************************************/
 	@PostMapping("/register")
-	public ResponseEntity<Void> doRegistration(@Valid @RequestBody Student std, UriComponentsBuilder builder) {
+	public ResponseEntity<Void> doRegistration(@Valid @RequestBody Coordinator std, UriComponentsBuilder builder) {
 		boolean flag = ls.doRegister(std);
 		if (flag == true) {
 			return new ResponseEntity<Void>(HttpStatus.OK);
@@ -339,5 +339,14 @@ public class APIController {
 		allUsers = ls.getAllUsersWithTest(testid);
 		return new ResponseEntity<List<String>>(allUsers, HttpStatus.OK);
 	}
+	
+	
+	// logging api
+	@GetMapping(path = "/countallstudents", produces = "application/json; charset=UTF-8")
+	public ResponseEntity<Integer> countAllStudents() {
+		Integer allUsers = ls.countAllStudents();
+		return new ResponseEntity<Integer>(allUsers, HttpStatus.OK);
+	}
+	
 
 }
