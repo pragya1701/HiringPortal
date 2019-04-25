@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface IAPIService {
    
-     boolean doRegister(Student std);
+     boolean doRegister(Coordinator std);
      boolean doLogin(String username, String password);
      Long getCordID(String username);
      List<Coordinator> getCordDetails(Long cordid);
@@ -42,4 +42,7 @@ public interface IAPIService {
      
      List<TestHistoryWrapper> getTestHistory(Long cordid);
      List<String> getAllUsersWithTest(Long testid);
+     
+     //logging
+     Integer countAllStudents();
 } 
