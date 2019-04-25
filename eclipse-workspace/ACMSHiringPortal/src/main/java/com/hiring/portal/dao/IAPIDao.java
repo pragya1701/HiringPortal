@@ -5,7 +5,7 @@ import com.hiring.portal.model.*;;
 public interface IAPIDao {
 	
 	// Rgistration and Login
-	void doRegister(Student std);
+	void doRegister(Coordinator cord);
 	Long getCordID(String username);
 	List<Coordinator> getCordDetails(Long cordid);
 	boolean registerExists(String username, String email);
@@ -48,5 +48,9 @@ public interface IAPIDao {
 	
 	//User map
 	void userCordMap(TestWrapper testwrapper);
+	
+	
+	//logging
+	Integer countAllStudents();
 	
 } 
