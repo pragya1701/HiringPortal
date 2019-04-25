@@ -316,7 +316,7 @@ footer img:focus , footer a:focus { outline: none; }
 	      $.ajax({
 	  			type : 'POST', // GET
 	  			contentType : "application/json",
-	  			url : "http://localhost:3030/generateMarks",
+	  			url : "/generateMarks",
 	  			dataType : "json",
 	  			data : formToResponse()
 	  		}); 
