@@ -65,7 +65,7 @@ function getCookie(cname) {
 	    	 $.ajax({
 		  			type : 'POST', // GET
 		  			contentType : "application/json",
-		  			url : "http://localhost:3030/getReport",
+		  			url : "/getReport",
 		  			dataType : "json",
 		  			data : formToJSON(),
 		  			success : function(data) {
