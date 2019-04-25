@@ -329,7 +329,7 @@ div.container2 {
 							var semail = sessionStorage.getItem("semail");
 							$
 									.getJSON(
-											"http://localhost:3030/api/getuserdetails/"+semail,
+											"/api/getuserdetails/"+semail,
 											function(json) {
 												console.log("data::"+json);
 												$("#uldisplay").empty();
@@ -362,7 +362,7 @@ div.container2 {
 							var semail = sessionStorage.getItem("semail");
 							$
 									.getJSON(
-											"http://localhost:3030/api/getTests/"+semail,
+											"/api/getTests/"+semail,
 											function(json) {
 												$("#uldisplay").empty();
 												var tr = $("#uldisplay");
@@ -388,7 +388,7 @@ div.container2 {
 							.ajax({
 								type : 'GET',
 								contentType : "application/json",
-								url : "http://localhost:3030/api/gettesthistory/"+email,
+								url : "/api/gettesthistory/"+email,
 								async : false
 							}).responseText);
 
@@ -474,7 +474,7 @@ div.container2 {
 		$.ajax({
 			type : 'POST', 
 			contentType : "application/json",
-			url : "http://localhost:3030/api/checktesttaken",
+			url : "/api/checktesttaken",
 			data : formToJSON(),
 			statusCode: {
 			    200: function() {
@@ -527,7 +527,7 @@ div.container2 {
 		$.ajax({
 			type : 'POST', // GET
 			contentType : "application/json",
-			url : "http://localhost:3030/getMyMarks",
+			url : "/getMyMarks",
 			dataType : "json",
 			data : toJSON(),
 			success : function(data) {
