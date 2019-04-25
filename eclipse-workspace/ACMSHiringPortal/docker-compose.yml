@@ -22,17 +22,17 @@ services:
     volumes:
       - my-db:/var/lib/mysql
 
-#  web:
- #   image: crazzycoders/acms:springdocker
-  #  restart: always
-   # ports:
-    #  - "3000:3000"
-    #expose:
+  web:
+    image: crazzycoders/acms:springdocker
+    restart: always
+    ports:
+      - "3000:3000"
+    expose:
       # Opens port 3306 on the container
-     # - '3000'
+      - '3000'
       # Where our data will be persisted
-    #depends_on:
-     #  - db
+    depends_on:
+       - db
 
    
   web1:
