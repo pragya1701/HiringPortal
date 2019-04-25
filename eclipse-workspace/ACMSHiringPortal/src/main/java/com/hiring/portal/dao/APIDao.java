@@ -34,14 +34,18 @@ public class APIDao implements IAPIDao {
 	private PassEncryption ps = new PassEncryption("bhavisjbfweauioe");
 
 	@Override
-	public void doRegister(Student std) {
-		try {
-			String enpass = ps.encrypt(std.getPassword());
-			std.setPassword(ps.encrypt(std.getPassword()));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		entityManager.persist(std);
+	public void doRegister(Coordinator cord) {
+//		try {
+//			String enpass = ps.encrypt(std.getPassword());
+//			std.setPassword(ps.encrypt(std.getPassword()));
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		entityManager.persist(std);
+		
+		entityManager.persist(cord);
+		
+		
 	}
 
 	@SuppressWarnings("unchecked")
@@ -445,4 +449,10 @@ public class APIDao implements IAPIDao {
 			}
 		}
 	}
+	
+	public Integer countAllStudents() {
+		String hql = "FROM Student as std";
+		Integer count = entityManager.createQuery(hql).getResultList().size();
+		return count;
+	 }
 }
