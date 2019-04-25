@@ -183,7 +183,7 @@ input[type=button]:hover {
 			$.ajax({
 				type : 'POST', 
 				contentType : "application/json",
-				url : "http://localhost:3000/api/login",
+				url : "/api/login",
 				data : formToJSON(),
 				statusCode: {
 				    200: function() {
@@ -207,7 +207,7 @@ input[type=button]:hover {
 		$.ajax({
 			type : 'GET', 
 			contentType : "application/json",
-			url : "http://localhost:3000/api/cordid/"+username,
+			url : "/api/cordid/"+username,
 			success : function(data) {
 				var semail = data;
 				console.log(semail);

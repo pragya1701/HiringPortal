@@ -428,16 +428,18 @@ div.container2 {
 			$.ajax({
 				type : 'POST', // GET
 				contentType : "application/json",
-				url : "http://localhost:3000/api/addmcqquestion",
+				url : "/api/addmcqquestion",
 				dataType : "json",
 				data : formToJSON(),
 				statusCode : {
 					200 : function() {
 						console.log("success");
+						alert("Question is added");
 						window.location.href = "corddashboard";
 					},
 					201 : function() {
 						console.log("error");
+						alert("Error has occured(Same question)");
 					}
 				}
 			});
@@ -454,7 +456,7 @@ div.container2 {
 			$.ajax({
 				type : 'GET', // GET
 				contentType : "application/json",
-				url : "http://localhost:3000/api/categoryid/" + cat,
+				url : "/api/categoryid/" + cat,
 				success : function(data) {
 					catIDVal = data;
 					console.log(catIDVal);
@@ -507,7 +509,7 @@ div.container2 {
 							function() {
 								$
 										.getJSON(
-												"http://localhost:3000/api/allmcqcategories",
+												"/api/allmcqcategories",
 												function(json) {
 													$("#categorydrop").empty();
 													var tr = $("#categorydrop");
@@ -556,7 +558,7 @@ div.container2 {
 							var cordid = sessionStorage.getItem("cordid");
 							$
 									.getJSON(
-											"http://localhost:3000/api/getcorddetails/"
+											"/api/getcorddetails/"
 													+ cordid,
 											function(json) {
 												console.log(json);

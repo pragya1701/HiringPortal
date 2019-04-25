@@ -442,16 +442,18 @@ div.container2 {
 			$.ajax({
 				type : 'POST', // GET
 				contentType : "application/json",
-				url : "http://localhost:3000/api/addmcqquestion",
+				url : "/api/addmcqquestion",
 				dataType : "json",
 				data : formToJSON(),
 				statusCode : {
 					200 : function() {
 						console.log("success");
+						alert("Question is added");
 						window.location.href = "corddashboard";
 					},
 					201 : function() {
 						console.log("error");
+						alert("Error has occured(Same question)");
 					}
 				}
 			});
@@ -468,7 +470,7 @@ div.container2 {
 			$.ajax({
 				type : 'GET', // GET
 				contentType : "application/json",
-				url : "http://localhost:3000/api/categoryid/" + cat,
+				url : "/api/categoryid/" + cat,
 				success : function(data) {
 					catIDVal = data;
 					console.log(catIDVal);
@@ -524,7 +526,7 @@ div.container2 {
 							function() {
 								$
 										.getJSON(
-												"http://localhost:3000/api/allcodecategories",
+												"/api/allcodecategories",
 												function(json) {
 													$("#categorydrop").empty();
 													var tr = $("#categorydrop");
@@ -542,7 +544,7 @@ div.container2 {
 
 	var timoutWarning = 840000; // Display warning in 14 Mins.
 	var timoutNow = 900000; // Timeout in 15 mins.
-	var logoutUrl = 'http://localhost:3000/login'; // URL to logout page.
+	var logoutUrl = '/login'; // URL to logout page.
 
 	var warningTimer;
 	var timeoutTimer;
@@ -573,7 +575,7 @@ div.container2 {
 							var cordid = sessionStorage.getItem("cordid");
 							$
 									.getJSON(
-											"http://localhost:3000/api/getcorddetails/"
+											"/api/getcorddetails/"
 													+ cordid,
 											function(json) {
 												console.log(json);

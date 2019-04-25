@@ -294,7 +294,7 @@ div.container2 {
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
 </head>
-<body onload="StartTimers(); loadcorddetails(); return dropDownCategory();"
+<body onload="count(); StartTimers(); loadcorddetails(); return dropDownCategory();"
 	onmousemove="ResetTimers();">
 	<div id="wrapper">
 		<!-- Sidebar -->
@@ -391,6 +391,10 @@ div.container2 {
 </body>
 </html>
 <script>
+setTimeout(function() {
+	location.reload();
+}, 60000);
+
 	var catIDVal;
 	function submitForm() {
 		$('#failure_p').hide();
@@ -402,7 +406,7 @@ div.container2 {
 			$.ajax({
 				type : 'POST', // GET
 				contentType : "application/json",
-				url : "http://localhost:3000/api/addmcqquestion",
+				url : "/api/addmcqquestion",
 				dataType : "json",
 				data : formToJSON(),
 				statusCode : {
@@ -417,6 +421,22 @@ div.container2 {
 			});
 		}
 	}
+	
+	function count(){
+		$.ajax({
+			type : 'GET', // GET
+			contentType : "application/json",
+			url : "/api/countallstudents",
+			success : function(data) {
+				console.log("count");
+				console.log(data);
+			},
+			error : function(data) {
+				console.log("count error");
+				console.log(data);
+			}
+		});
+	}
 	function getCatID() {
 		var isvalidate = $("#myForm")[0].checkValidity();
 		//var isvalidate = true;
@@ -428,7 +448,7 @@ div.container2 {
 			$.ajax({
 				type : 'GET', // GET
 				contentType : "application/json",
-				url : "http://localhost:3000/api/categoryid/" + cat,
+				url : "/api/categoryid/" + cat,
 				success : function(data) {
 					catIDVal = data;
 					console.log(catIDVal);
@@ -481,7 +501,7 @@ div.container2 {
 							function() {
 								$
 										.getJSON(
-												"http://localhost:3000/api/allmcqcategories",
+												"/api/allmcqcategories",
 												function(json) {
 													$("#categorydrop").empty();
 													var tr = $("#categorydrop");
@@ -530,7 +550,7 @@ div.container2 {
 							var cordid = sessionStorage.getItem("cordid");
 							$
 									.getJSON(
-											"http://localhost:3000/api/getcorddetails/"
+											"/api/getcorddetails/"
 													+ cordid,
 											function(json) {
 												console.log(json);

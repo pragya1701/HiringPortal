@@ -299,7 +299,7 @@ table, th, td , tr {
 		$.ajax({
 			type : 'GET', // GET
 			contentType : "application/json",
-			url : "http://localhost:3000/api/getAllUsersWithTest/" + testid,
+			url : "/api/getAllUsersWithTest/" + testid,
 			success : function(data) {
 				console.log(data);
 				var tableval = $('table');
@@ -324,7 +324,7 @@ table, th, td , tr {
 	
 	var timoutWarning = 840000; // Display warning in 14 Mins.
 	var timoutNow = 900000; // Timeout in 15 mins.
-	var logoutUrl = 'http://localhost:3000/login'; // URL to logout page.
+	var logoutUrl = '/login'; // URL to logout page.
 
 	var warningTimer;
 	var timeoutTimer;

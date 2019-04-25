@@ -399,11 +399,13 @@ div.container2 {
 			$.ajax({
 				type : 'POST', // GET
 				contentType : "application/json",
-				url : "http://localhost:3000/api/addcategory",
+				url : "/api/addcategory",
 				data : formToJSON(),
 				success : function(data) {
 					console.log("data");
 					console.log("success");
+					alert("Category is added");
+					window.location.href="/corddashboard";
 				},
 				error : function(data) {
 					console.log("data");
@@ -460,7 +462,7 @@ div.container2 {
 							var cordid = sessionStorage.getItem("cordid");
 							$
 									.getJSON(
-											"http://localhost:3000/api/getcorddetails/"
+											"/api/getcorddetails/"
 													+ cordid,
 											function(json) {
 												console.log(json);

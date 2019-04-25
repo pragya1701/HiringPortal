@@ -408,7 +408,7 @@ div.container2 {
 
 	var timoutWarning = 840000; // Display warning in 14 Mins.
 	var timoutNow = 900000; // Timeout in 15 mins.
-	var logoutUrl = 'http://localhost:3000/login'; // URL to logout page.
+	var logoutUrl = '/login'; // URL to logout page.
 
 	var warningTimer;
 	var timeoutTimer;
@@ -439,7 +439,7 @@ div.container2 {
 							var cordid = sessionStorage.getItem("cordid");
 							$
 									.getJSON(
-											"http://localhost:3000/api/getcorddetails/"
+											"/api/getcorddetails/"
 													+ cordid,
 											function(json) {
 												console.log(json);

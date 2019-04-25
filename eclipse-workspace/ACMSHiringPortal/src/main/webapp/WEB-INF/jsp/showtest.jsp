@@ -296,7 +296,8 @@ div.container2 {
 			<label for="testname" class="bmd-label-floating">Test name</label> <input
 				type="text" class="form-control" id="testname">
 		</fieldset>
-		<button id="submit_button" class="btn btn-primary btn-raised" onclick="createTest()">Create Test</button>
+		<input type="button" value="Create Test" id="submit_button"
+			onclick="createTest()">
 		</div>
 	</div>
 
@@ -386,7 +387,7 @@ function checkBox() {
 	$.ajax({
 		type : 'POST', // GET
 		contentType : "application/json",
-		url : "http://localhost:3000/api/question/"+question,
+		url : "/api/question/"+question,
 		success : function(data) {
 			
 		},
@@ -406,7 +407,7 @@ function loadQuestions() {
                 function() {
                     $
                         .getJSON(
-                            "http://localhost:3000/api/showtest",
+                            "/api/showtest",
                             function(json) {
                                 $("#uldisplay").empty();
                                 var tr = $("#uldisplay");
@@ -431,7 +432,7 @@ function createTest() {
 	$.ajax({
 		type : 'POST', // GET
 		contentType : "application/json",
-		url : "http://localhost:3000/api/createtest/",
+		url : "/api/createtest/",
 		dataType : "json",
 		data : formToJSON(),
 		statusCode: {
@@ -454,7 +455,7 @@ function checkBox() {
 	$.ajax({
 		type : 'POST', // GET
 		contentType : "application/json",
-		url : "http://localhost:3000/api/removequestion/"+question,
+		url : "/api/removequestion/"+question,
 		success : function(data) {
 			
 		},
@@ -475,7 +476,7 @@ function formToJSON() {
 
 var timoutWarning = 840000; // Display warning in 14 Mins.
 var timoutNow = 900000; // Timeout in 15 mins.
-var logoutUrl = 'http://localhost:3000/login'; // URL to logout page.
+var logoutUrl = '/login'; // URL to logout page.
 
 var warningTimer;
 var timeoutTimer;
@@ -507,7 +508,7 @@ function loadcorddetails() {
 						var cordid = sessionStorage.getItem("cordid");
 						$
 								.getJSON(
-										"http://localhost:3000/api/getcorddetails/"
+										"/api/getcorddetails/"
 												+ cordid,
 										function(json) {
 											console.log(json);

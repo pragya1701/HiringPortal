@@ -429,7 +429,7 @@ div.container2 {
 								function() {
 									$
 											.getJSON(
-													"http://localhost:3000/api/selectorganization/"
+													"/api/selectorganization/"
 															+ organization,
 													function(json) {
 														$("#uldisplay").empty();
@@ -457,7 +457,7 @@ div.container2 {
 							function() {
 								$
 										.getJSON(
-												"http://localhost:3000/api/allstudents",
+												"/api/allstudents",
 												function(json) {
 													$("#uldisplay").empty();
 													var tr = $("#uldisplay");
@@ -485,7 +485,7 @@ div.container2 {
 							function() {
 								$
 										.getJSON(
-												"http://localhost:3000/api/allorganizations",
+												"/api/allorganizations",
 												function(json) {
 													console.log(json);
 													$("#catdisplay").empty();
@@ -507,7 +507,7 @@ div.container2 {
 		$.ajax({
 			type : 'GET', // GET
 			contentType : "application/json",
-			url : "http://localhost:3000/api/addemail/" + emailarea,
+			url : "/api/addemail/" + emailarea,
 			success : function(data) {
 
 			},
@@ -521,16 +521,18 @@ div.container2 {
 		$.ajax({
 			type : 'POST', // GET
 			contentType : "application/json",
-			url : "http://localhost:3000/api/sendmail",
+			url : "/api/sendmail",
 			dataType : "json",
 			data : formToJSON(),
 			statusCode : {
 				200 : function() {
 					console.log("success");
-					//window.location.href="/corddashboard";
+					alert("Email sent");
+					window.location.href="/corddashboard";
 				},
 				201 : function() {
 					console.log("error");
+					alert("Error has occured");
 				}
 			}
 		});
@@ -549,7 +551,7 @@ div.container2 {
 							function() {
 								$
 										.getJSON(
-												"http://localhost:3000/api/alltests",
+												"/api/alltests",
 												function(json) {
 													$("#testdrop").empty();
 													var tr = $("#testdrop");
@@ -576,7 +578,7 @@ div.container2 {
 			$.ajax({
 				type : 'GET', // GET
 				contentType : "application/json",
-				url : "http://localhost:3000/api/testid/" + test,
+				url : "/api/testid/" + test,
 				success : function(data) {
 					testIDVal = data;
 					console.log(testIDVal);
@@ -609,7 +611,7 @@ div.container2 {
 
 	var timoutWarning = 840000; // Display warning in 14 Mins.
 	var timoutNow = 900000; // Timeout in 15 mins.
-	var logoutUrl = 'http://localhost:3000/login'; // URL to logout page.
+	var logoutUrl = '/login'; // URL to logout page.
 
 	var warningTimer;
 	var timeoutTimer;
@@ -641,7 +643,7 @@ div.container2 {
 							var cordid = sessionStorage.getItem("cordid");
 							$
 									.getJSON(
-											"http://localhost:3000/api/getcorddetails/"
+											"/api/getcorddetails/"
 													+ cordid,
 											function(json) {
 												console.log(json);
