@@ -31,22 +31,6 @@ public class AcmsHiringPortalApplicationTests {
 	}
 	
 	@Test
-	public void TestQuesiton() {
-		APIService apiservice = context.getBean(APIService.class);
-		Question q = new Question();
-		q.setQuestion("What Grade you will get in SPE?");
-		q.setOption1("A");
-		q.setOption2("A");
-		q.setOption3("A");
-		q.setOption4("A");
-		q.setCid((long) 8);
-		q.setLevel("easy");
-		q.setAnswer("A");
-		q.setCoordid((long)1);
-		apiservice.addMCQQuestion(q);	
-	}
-	
-	@Test
 	public void getAllOrganization() {
 		APIService apiservice = context.getBean(APIService.class);
 		System.out.println("All Organizations");
