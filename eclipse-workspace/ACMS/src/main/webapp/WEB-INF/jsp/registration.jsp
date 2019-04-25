@@ -235,7 +235,7 @@ input[type=button]:hover {
 			$.ajax({
 				type : 'POST',
 				contentType : "application/json",
-				url : "http://localhost:3030/api/register",
+				url : "/api/register",
 				dataType : "json",
 				data : formToJSON(),
 				statusCode : {
