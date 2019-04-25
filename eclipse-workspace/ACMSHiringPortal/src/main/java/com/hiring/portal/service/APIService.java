@@ -12,18 +12,14 @@ public class APIService implements IAPIService {
 	private IAPIDao apiDao;
 
 	@Override
-	public synchronized boolean doRegister(Student std) {
-		if (apiDao.registerExists(std.getUsername(), std.getEmail())) {
-			System.out.println("Student is already there");
-			return false;
+	public synchronized boolean doRegister(Coordinator std) {
 
-		} else {
-			apiDao.doRegister(std);
-			System.out.println("Student is not there so added");
-			return true;
-		}
+		apiDao.doRegister(std);
+		System.out.println("Student is not there so added");
+		return true;
+
 	}
-	
+
 	@Override
 	public synchronized boolean doLogin(String username, String password) {
 		if (apiDao.loginExists(username, password)) {
@@ -35,15 +31,14 @@ public class APIService implements IAPIService {
 			return false;
 		}
 	}
-	
 
 	@Override
 	public Long getCordID(String username) {
 		return apiDao.getCordID(username);
 	}
-	
+
 	@Override
-	public List<Coordinator> getCordDetails(Long cordid){
+	public List<Coordinator> getCordDetails(Long cordid) {
 		return apiDao.getCordDetails(cordid);
 	}
 
@@ -66,7 +61,7 @@ public class APIService implements IAPIService {
 	public Long getCategoryID(String category) {
 		return apiDao.getCategoryID(category);
 	}
-	
+
 	@Override
 	public synchronized boolean addMCQQuestion(Question qmcq) {
 		if (apiDao.questionExists(qmcq.getQuestion())) {
@@ -92,12 +87,12 @@ public class APIService implements IAPIService {
 			return true;
 		}
 	}
-	
+
 	@Override
 	public Long getCategoryIDWithLevel(String categoryWithLevel) {
 		return apiDao.getCategoryIDWithLevel(categoryWithLevel);
 	}
-	
+
 	@Override
 	public List<Question> getAllMCQCatQuestionsWithLevel(String category) {
 		return apiDao.getAllMCQCatQuestionsWithLevel(category);
@@ -125,7 +120,7 @@ public class APIService implements IAPIService {
 		// TODO Auto-generated method stub
 		return apiDao.getAllOrganizations();
 	}
-	
+
 	@Override
 	public List<Student> getEmailStudents(String org) {
 		// TODO Auto-generated method stub
@@ -136,16 +131,14 @@ public class APIService implements IAPIService {
 	public List<String> getAllStudents(String organization) {
 		return apiDao.getAllStudents(organization);
 	}
-	
-	
-	
-	//Show Test
-		public List<Question> showTest(){
-			return apiDao.showTest();
-		}
-		
-	//Create Test
-	public boolean createTest(Test test){
+
+	// Show Test
+	public List<Question> showTest() {
+		return apiDao.showTest();
+	}
+
+	// Create Test
+	public boolean createTest(Test test) {
 		if (apiDao.testExists(test.getTname())) {
 			System.out.println("Test name is already there");
 			return false;
@@ -155,34 +148,37 @@ public class APIService implements IAPIService {
 			System.out.println("Test is not there so added");
 			return true;
 		}
-		
-	}
-	
-	//get all tests
-		@Override
-		public List<Test> getAllTests() {
-			return apiDao.getAllTests();
-		}
-		
-		@Override
-		public void userCordMap(TestWrapper testwrapper) {
-			apiDao.userCordMap(testwrapper);
-		}
 
-	
+	}
+
+	// get all tests
+	@Override
+	public List<Test> getAllTests() {
+		return apiDao.getAllTests();
+	}
+
+	@Override
+	public void userCordMap(TestWrapper testwrapper) {
+		apiDao.userCordMap(testwrapper);
+	}
+
 	@Override
 	public Long getTestID(String test) {
 		return apiDao.getTestID(test);
 	}
-	
+
 	@Override
-	public List<TestHistoryWrapper> getTestHistory(Long cordid){
+	public List<TestHistoryWrapper> getTestHistory(Long cordid) {
 		return apiDao.getTestHistory(cordid);
 	}
-	
+
 	@Override
-	public List<String> getAllUsersWithTest(Long testid){
+	public List<String> getAllUsersWithTest(Long testid) {
 		return apiDao.getAllUsersWithTest(testid);
 	}
 
+	@Override
+	public Integer countAllStudents() {
+		return apiDao.countAllStudents();
+	}
 }
