@@ -12,9 +12,21 @@ import com.hiring.portal.service.IAPIService;
 
 @SpringBootApplication
 @EnableJpaAuditing
-public class AcmsHiringPortalApplication extends SpringBootServletInitializer{
+public class AcmsHiringPortalApplication extends SpringBootServletInitializer implements CommandLineRunner{
 	public static void main(String[] args) {
 
 		SpringApplication.run(AcmsHiringPortalApplication.class, args);
+	}
+	@Autowired
+	IAPIService apiservice;
+	@Override
+	public void run(String... args) throws Exception{
+		
+		Coordinator cord = new Coordinator();
+		cord.setUsername("Test");
+		cord.setPassword("Test");
+		cord.setPhone("9033312198");
+		apiservice.doRegister(cord);
+		System.out.println("Admin Logged in");
 	}
 }
