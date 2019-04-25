@@ -12,7 +12,7 @@ import com.hiring.portal.service.IAPIService;
 
 @SpringBootApplication
 @EnableJpaAuditing
-public class AcmsHiringPortalApplication extends SpringBootServletInitializer implements CommandLineRunner{
+public class AcmsHiringPortalApplication extends SpringBootServletInitializer{
 	public static void main(String[] args) {
 
 		SpringApplication.run(AcmsHiringPortalApplication.class, args);
