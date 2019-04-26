@@ -1,5 +1,5 @@
 package com.hiring.portal.model;
 
 public class Path {
-	public static String path = "/home/hima/eclipse-workspace/ACMS";
+	public static String path = System.getProperty("user.dir");
 }
