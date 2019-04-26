@@ -127,7 +127,7 @@ input[type=button]:hover {
 </head>
 <body>
 	<h1 class="text-center" style="color: #006400; font-size: 70px">
-		<b>India's best Online Hiring Portal</b>
+		<b>Online Hiring Portal</b>
 	</h1>
 	<h3 class="text-center" style="color: #696969; font-size: 30px">
 		<b>Improving People's Lives Through A Better Career</b>
