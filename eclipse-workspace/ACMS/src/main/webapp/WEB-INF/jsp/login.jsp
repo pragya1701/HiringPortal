@@ -124,7 +124,7 @@ input[type=button]:hover {
 	<h1 class="text-center" style="color:#000;font-size:70px">
 		<b><i>Online Hiring Portal</i></b>
 	</h1>
-	<h3  class="text-center" style="color:#000;font-size:30px"><b><i>Improving People's Lives Through A Better Currier</i></b></h3>
+	<h3  class="text-center" style="color:#000;font-size:30px"><b><i>Improving People's Lives Through A Better Career</i></b></h3>
 	
 	<div class="container" style="margin-top: 30px; margin-left: -30px;">
 		<div>
