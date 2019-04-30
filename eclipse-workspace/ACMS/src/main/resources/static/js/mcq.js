@@ -15,14 +15,21 @@
 	var selected = [];
 	
 	$(document).ready(function(){
+		quesData = [];
 		quesData = $.parseJSON($.ajax({
 			type : 'GET', 
 			contentType : "application/json",
-			url : "http://localhost:3030/mcqQuestion/"+testid, 
+			url : "/mcqQuestion/"+testid, 
 		    async: false
 		}).responseText); 
 		
 		var i=0;
+		
+		if(quesData.length == 0){
+			sessionStorage.setItem("stage_id",1);
+	        window.location.href = "coding";
+		}
+		
 		quesData.forEach(function(ques) {
 		$('.sidenav').append("<a href='#q" + i + "' id='q" + i + "' onclick='fetch(" + i + ")'>Question "+(i+1)+"</a>"); 
 		i=i+1;
@@ -102,7 +109,7 @@
     	 $.ajax({
 	  			type : 'POST', // GET
 	  			contentType : "application/json",
-	  			url : "http://localhost:3030/saveMcq/" + id,
+	  			url : "/saveMcq/" + id,
 	  			dataType : "json",
 	  			data : formToJSON(),
 	  			success : function(data) {
