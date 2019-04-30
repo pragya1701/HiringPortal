@@ -15,7 +15,7 @@ public interface IAPIDao {
     void addMCQQuestion(Question qmcq);
 	void addCategory(Category c);
 	boolean questionExists(String question);
-	boolean categoryExists(String categoty);
+	boolean categoryExists(Category category);
 	
     //Show all questions and categories
     List<Question> getAllMCQQuestions(String level);
