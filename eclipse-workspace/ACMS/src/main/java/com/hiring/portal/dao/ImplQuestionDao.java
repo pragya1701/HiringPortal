@@ -238,7 +238,10 @@ public class ImplQuestionDao implements QuestionDao{
 		String e = m.getEndtime();
 		String email = m.getEmail();
 		
-		String hql = "select email , totalmarks , (SELECT 1 + COUNT(totalmarks) from UserMarks u2 where u2.totalmarks > u1.totalmarks) as rank"+
+		System.out.println("Tid: " + tid + "Cid: "+cid+"start: "+s+"end: "+e+"email: "+email );
+		
+		String hql = "select email , totalmarks , (SELECT 1 + COUNT(totalmarks) from UserMarks u2 where u2.totalmarks > u1.totalmarks "+""
+				+ "and testid =?1 and cordid=?2 and starttime=?3 and endtime=?4) as rank"+
 				" from UserMarks u1 where testid =?1 and cordid=?2 and starttime=?3 and endtime=?4 order by rank";
 		TypedQuery<Object[]> query	= entityManager.createQuery(hql, Object[].class).setParameter(1, tid).setParameter(2, cid).setParameter(3, s).setParameter(4, e);
 		List<Object[]> results = query.getResultList();
@@ -254,6 +257,7 @@ public class ImplQuestionDao implements QuestionDao{
 			ob.setEmail((String) result[0]);
 			ob.setTotalmarks((int) result[1]);
 			ob.setRank((Long) result[2]);
+			System.out.println("Email: "+email +"Rank:"+ ob.getRank());
 			marksList.add(ob);
 		}
 		
