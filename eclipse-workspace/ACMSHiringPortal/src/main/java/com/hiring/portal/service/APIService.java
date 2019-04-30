@@ -77,7 +77,7 @@ public class APIService implements IAPIService {
 
 	@Override
 	public synchronized boolean addCategory(Category c) {
-		if (apiDao.categoryExists(c.getCategoryname())) {
+		if (apiDao.categoryExists(c)) {
 			System.out.println("Category is already there");
 			return false;
 
