@@ -279,13 +279,7 @@ footer img:focus , footer a:focus { outline: none; }
 	
 	<style>
   	body {
-  		background-image: url("images/home_bg.jpg");
-  		height: 100%;
-	/* Center and scale the image nicely */
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
-	
+  	
   	}
   	
   </style>
@@ -316,7 +310,7 @@ footer img:focus , footer a:focus { outline: none; }
 	      $.ajax({
 	  			type : 'POST', // GET
 	  			contentType : "application/json",
-	  			url : "/generateMarks",
+	  			url : "http://localhost:3030/generateMarks",
 	  			dataType : "json",
 	  			data : formToResponse()
 	  		}); 
