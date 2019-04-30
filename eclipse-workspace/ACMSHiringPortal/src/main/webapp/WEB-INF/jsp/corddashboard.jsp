@@ -116,7 +116,7 @@ div.container2 {
 }
 
 div.container2 {
-	margin-top: -672px;
+	margin-top:  -672px;
 	border: 3px solid #ffffff;
 	width: 250px;
 	height: 100%;
@@ -233,7 +233,8 @@ div.container2 {
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
 </head>
-<body onload="check(); StartTimers(); loadQuestions(); loadcorddetails(); return loadCategories();"
+<body
+	onload="check(); StartTimers(); loadQuestions(); loadcorddetails(); return loadCategories();"
 	onmousemove="ResetTimers();">
 	<div id="wrapper">
 		<!-- Sidebar -->
@@ -263,19 +264,20 @@ div.container2 {
 			id="defaultOpen">Coding</button>
 
 		<div style="margin-top: 60px">
-		<h6 class="text-center">Select questions and click view test to view selected questions.</h6>
+			<h6 class="text-center">Select questions and click view test to
+				view selected questions.</h6>
 			<ul class="list-group" id="uldisplay" onClick="checkBox()">
 			</ul>
 		</div>
-		<input type="button" value="View Selected Questions" id="submit_button"
-			onclick="showTest()">
+		<input type="button" value="View Selected Questions"
+			id="submit_button" onclick="showTest()">
 	</div>
 
 	<div class="container2">
 		<div class="sidebar">
 			<br> <br>
 			<ul>
-				<li><a href="home"><i class="fa fa-fw fa-home"></i> Home</a></li>
+				<li><a href="cordinit"><i class="fa fa-fw fa-home"></i> Home</a></li>
 				<li><a href="addmcqquestion"><i class="fa fa-fw fa-wrench"></i>
 						Add MCQ Question </a></li>
 				<li><a href="addcodequestion"><i class="fa fa-fw fa-wrench"></i>
@@ -288,7 +290,7 @@ div.container2 {
 						Send Invite</a></li>
 				<li><a href="sendnotification"><i
 						class="fa fa-fw fa-envelope"></i> Send Notification</a></li>
-				<li><a href="login"><i class="fa fa-fw fa-user"></i> Logout
+				<li><a onclick="return logout();" href="login"><i class="fa fa-fw fa-user"></i> Logout
 				</a></li>
 			</ul>
 		</div>
@@ -349,6 +351,15 @@ div.container2 {
 </body>
 </html>
 <script>
+	function logout() {
+
+		$.ajax({
+			type : 'GET',
+			contentType : "application/json",
+			url : "/api/clearAll"
+		});
+
+	}
 	function loadcorddetails() {
 		console.log("inside coordinator details");
 		$(document)
@@ -357,8 +368,7 @@ div.container2 {
 							var cordid = sessionStorage.getItem("cordid");
 							$
 									.getJSON(
-											"/api/getcorddetails/"
-													+ cordid,
+											"/api/getcorddetails/" + cordid,
 											function(json) {
 												console.log(json);
 												$("#profile").empty();
@@ -505,7 +515,6 @@ div.container2 {
 							});
 		}
 
-		
 	}
 
 	function loadCodingCategories() {
@@ -583,8 +592,8 @@ div.container2 {
 		window.location.href = "/showtest";
 	}
 
-	var timoutWarning = 840000; // Display warning in 14 Mins.
-	var timoutNow = 900000; // Timeout in 15 mins.
+	var timoutWarning = 84000; // Display warning in 14 Mins.
+	var timoutNow = 90000; // Timeout in 15 mins.
 	var logoutUrl = '/login'; // URL to logout page.
 
 	var timeoutTimer;
