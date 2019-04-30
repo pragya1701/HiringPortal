@@ -16,14 +16,23 @@
 
 	$(document).ready(
 			function() {
+				
+				quesData = [];
+				
 				quesData = $.parseJSON($.ajax({
 					type : 'GET',
 					contentType : "application/json",
-					url : "http://localhost:3030/codeQuestion/" + testid,
+					url : "/codeQuestion/" + testid,
 					async : false
 				}).responseText);
 
 				var i = 0;
+				if(quesData.length == 0){
+					sessionStorage.setItem("stage_id", 2);
+					localStorage.clear();
+					window.location.href = "successsubmit";
+				}
+				
 				quesData.forEach(function(ques) {
 					$('.sidenav').append(
 							"<a href='#q" + i + "' id='q" + i
@@ -96,7 +105,7 @@
 			$.ajax({
 				type : 'POST', // GET
 				contentType : "application/json",
-				url : "http://localhost:3030/codeSubmit/" + id,
+				url : "/codeSubmit/" + id,
 				dataType : "json",
 				data : formToResponse()
 			});
@@ -114,7 +123,7 @@
 			$.ajax({
 				type : 'POST', // GET
 				contentType : "application/json",
-				url : "http://localhost:3030/sampleCase/" + id,
+				url : "/sampleCase/" + id,
 				dataType : "json",
 				data : formToJSON(),
 				success : function(data) {
