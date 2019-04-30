@@ -105,9 +105,9 @@ public class APIDao implements IAPIDao {
 	}
 
 	@Override
-	public boolean categoryExists(String category) {
-		String hql = "FROM com.hiring.portal.model.Category as c WHERE c.categoryname = ?1";
-		int count = entityManager.createQuery(hql).setParameter(1, category).getResultList().size();
+	public boolean categoryExists(Category category) {
+		String hql = "FROM com.hiring.portal.model.Category as c WHERE c.categoryname = ?1 AND c.type = ?2";
+		int count = entityManager.createQuery(hql).setParameter(1, category.getCategoryname()).setParameter(2,category.getType()).getResultList().size();
 		System.out.println("count:" + count);
 		return count > 0 ? true : false;
 	}
