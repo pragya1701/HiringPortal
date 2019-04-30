@@ -415,7 +415,7 @@ div.container2 {
 		document.cookie = "test_end" + "=" + globaldata[j].enddate;
 		document.cookie = "cord_id" + "=" + sessionStorage.getItem("cordid");
 
-		window.location.href = 'http://localhost:3030/evaluate';
+		window.location.href = '/evaluate';
 
 	}
 
