@@ -152,7 +152,7 @@ div.container2 {
 }
 
 div.container2 {
-	margin-top: -672px;
+	margin-top:  -672px	;
 	border: 3px solid #ffffff;
 	width: 250px;
 	height: 100%;
@@ -277,7 +277,8 @@ div.container2 {
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
 </head>
-<body onload="StartTimers(); loadcorddetails(); return dropDownCategory();"
+<body
+	onload="StartTimers(); loadcorddetails(); return dropDownCategory();"
 	onmousemove="ResetTimers();">
 	<div id="wrapper">
 		<!-- Sidebar -->
@@ -288,8 +289,9 @@ div.container2 {
 		</div>
 	</div>
 	<div class="container1">
-		<h2 class="text-center" style="margin-top: 20px"><i>Add MCQ
-			Question</i></h2>
+		<h2 class="text-center" style="margin-top: 20px">
+			<i>Add MCQ Question</i>
+		</h2>
 		<div class="incontainer">
 			<form method="post" id="myForm">
 				<fieldset class="form-group">
@@ -343,7 +345,8 @@ div.container2 {
 		<div class="sidebar">
 			<br> <br>
 			<ul>
-				<li><a href="cordinit"><i class="fa fa-fw fa-home"></i> Home</a></li>
+				<li><a href="cordinit"><i class="fa fa-fw fa-home"></i>
+						Home</a></li>
 				<li><a href="addmcqquestion"><i class="fa fa-fw fa-wrench"></i>
 						Add MCQ Question </a></li>
 				<li><a href="addcodequestion"><i class="fa fa-fw fa-wrench"></i>
@@ -356,7 +359,7 @@ div.container2 {
 						Send Invite</a></li>
 				<li><a href="sendnotification"><i
 						class="fa fa-fw fa-envelope"></i> Send Notification</a></li>
-				<li><a href="login"><i class="fa fa-fw fa-user"></i> Logout
+				<li><a onclick="return logout();" href="login"><i class="fa fa-fw fa-user"></i> Logout
 				</a></li>
 			</ul>
 		</div>
@@ -417,6 +420,15 @@ div.container2 {
 </body>
 </html>
 <script>
+	function logout() {
+
+		$.ajax({
+			type : 'GET',
+			contentType : "application/json",
+			url : "/api/clearAll"
+		});
+
+	}
 	var catIDVal;
 	function submitForm() {
 		$('#failure_p').hide();
@@ -549,7 +561,7 @@ div.container2 {
 		alert("Session Timeout.... Please login again");
 		window.location = logoutUrl;
 	}
-	
+
 	function loadcorddetails() {
 		console.log("inside coordinator details");
 		$(document)
@@ -558,8 +570,7 @@ div.container2 {
 							var cordid = sessionStorage.getItem("cordid");
 							$
 									.getJSON(
-											"/api/getcorddetails/"
-													+ cordid,
+											"/api/getcorddetails/" + cordid,
 											function(json) {
 												console.log(json);
 												$("#profile").empty();
@@ -576,5 +587,4 @@ div.container2 {
 											});
 						});
 	}
-
 </script>
