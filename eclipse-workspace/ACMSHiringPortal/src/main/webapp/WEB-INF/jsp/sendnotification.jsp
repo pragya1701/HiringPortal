@@ -12,6 +12,21 @@ body {
 	overflow-x: hidden;
 }
 
+input[type=button] {
+	width: 100%;
+	background-color: #228b22;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+input[type=button]:hover {
+	background-color: #45a049;
+}
+
 /* Toggle Styles */
 #wrapper {
 	padding-left: 0;
@@ -235,6 +250,9 @@ div.container2 {
 		<h2 class="text-center" style="color: #000; font-size: 50px">
 			<i>Send Notification</i>
 		</h2>
+		<h5 class="text-center">Filter candidates according to
+			organization.</h5>
+		<h5 class="text-center">Add email of other users below.</h5>
 		<fieldset class="form-group">
 			<label for="subject" class="bmd-label-floating">Subject</label> <input
 				type="text" class="form-control" id="subject">
@@ -247,20 +265,21 @@ div.container2 {
 		</ul>
 		<textarea rows="10" cols="74" id="emailarea"
 			placeholder="please enter comma(,) separated email addresses"></textarea>
-		<button id="submit_button" class="btn btn-primary btn-raised"
-			onclick="addEmail()">Add Custom Email</button>
-		<button id="submit_button" class="btn btn-primary btn-raised"
-			value="Register" onclick="sendEmail()">Send Email</button>
+
+		<input type="button" value="Add Email Addresses" id="submit_button"
+			onclick="addEmail()"> <input type="button" value="Send Email"
+			id="submit_button" onclick="sendEmail()">
 	</div>
 	<div class="container2">
 		<div class="sidebar">
 			<br> <br>
 			<ul>
-				<li><a href="cordinit"><i class="fa fa-fw fa-home"></i> Home</a></li>
+				<li><a href="cordinit"><i class="fa fa-fw fa-home"></i>
+						Home</a></li>
 				<li><a href="contactus"><i class="fa fa-fw fa-envelope"></i>
 						Contact</a></li>
-				<li><a href="login"><i class="fa fa-fw fa-user"></i> Logout
-				</a></li>
+				<li><a onclick="return logout();" href="login"><i
+						class="fa fa-fw fa-user"></i> Logout </a></li>
 			</ul>
 		</div>
 	</div>
@@ -320,6 +339,15 @@ div.container2 {
 </body>
 </html>
 <script>
+	function logout() {
+
+		$.ajax({
+			type : 'GET',
+			contentType : "application/json",
+			url : "/api/clearAll"
+		});
+
+	}
 	function seachOrganization() {
 		if (document.querySelector('input[name="org"]:checked').value != "null") {
 			var organization = document
@@ -486,8 +514,7 @@ div.container2 {
 							var cordid = sessionStorage.getItem("cordid");
 							$
 									.getJSON(
-											"/api/getcorddetails/"
-													+ cordid,
+											"/api/getcorddetails/" + cordid,
 											function(json) {
 												console.log(json);
 												$("#profile").empty();
