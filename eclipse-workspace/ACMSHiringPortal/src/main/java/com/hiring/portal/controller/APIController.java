@@ -348,5 +348,16 @@ public class APIController {
 		return new ResponseEntity<Integer>(allUsers, HttpStatus.OK);
 	}
 	
+	
+	//Make all the lists empty
+	@GetMapping(path = "/clearAll")
+	public ResponseEntity<Void> clearAll(){
+		Values.emailList.clear();
+		Values.emailCustomList = null;
+		Values.questionId.clear();
+		Values.questionIdTemp.clear();
+		Values.questions.clear();
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
 
 }
