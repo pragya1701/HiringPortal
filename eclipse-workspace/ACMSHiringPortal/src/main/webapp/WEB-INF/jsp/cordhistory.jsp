@@ -110,7 +110,7 @@ h1, h3 {
 }
 
 div.container2 {
-	margin-top: -672px;
+	margin-top:  -672px;
 	border: 3px solid #000;
 	width: 250px;
 	height: 100%;
@@ -256,7 +256,7 @@ div.container2 {
 						Home</a></li>
 				<li><a href="contactus"><i class="fa fa-fw fa-envelope"></i>
 						Contact</a></li>
-				<li><a href="login"><i class="fa fa-fw fa-user"></i> Logout
+				<li><a onclick="return logout();" href="login"><i class="fa fa-fw fa-user"></i> Logout
 				</a></li>
 			</ul>
 		</div>
@@ -323,6 +323,15 @@ div.container2 {
 </body>
 </html>
 <script>
+	function logout() {
+
+		$.ajax({
+			type : 'GET',
+			contentType : "application/json",
+			url : "/api/clearAll"
+		});
+
+	}
 	var globaldata = null;
 	function checkBox() {
 		var testid = document.querySelector('input[name="cbox"]:checked').id;
@@ -348,8 +357,7 @@ div.container2 {
 							function() {
 								$
 										.getJSON(
-												"/api/gettesthistory/"
-														+ cordid,
+												"/api/gettesthistory/" + cordid,
 												function(json) {
 													globaldata = json;
 													$("#testcomp").empty();
@@ -367,7 +375,9 @@ div.container2 {
 																			+ json[i].tname
 																			+ "<input type='button' style='margin-left:250px' class='btn btn-primary' id='"
 																			+ json[i].tid
-																			+ "' value='View Results' onClick='eval("+i+")'></li></ul></li>");
+																			+ "' value='View Results' onClick='eval("
+																			+ i
+																			+ ")'></li></ul></li>");
 														} else if (json[i].cordFlag == 2) {
 															testpend
 																	.append("<li class='list-group-item'"+ json[i].tid +"><ul role='listbox' tabindex='0' aria-label='email list'>"
@@ -399,17 +409,14 @@ div.container2 {
 		localStorage.setItem("test_end",globaldata[i].enddate);
 		localStorage.setItem("cord_id",globaldata[i].cordid);
 		 */
-		
 
-			
-		 document.cookie = "test_id" + "=" + globaldata[j].tid;
-		 document.cookie = "test_start" + "=" + globaldata[j].startdate;
-		 document.cookie = "test_end" + "=" + globaldata[j].enddate;
-		 document.cookie = "cord_id" + "=" + sessionStorage.getItem("cordid");
+		document.cookie = "test_id" + "=" + globaldata[j].tid;
+		document.cookie = "test_start" + "=" + globaldata[j].startdate;
+		document.cookie = "test_end" + "=" + globaldata[j].enddate;
+		document.cookie = "cord_id" + "=" + sessionStorage.getItem("cordid");
 
-		 window.location.href = 'http://localhost:3030/evaluate';
+		window.location.href = 'http://localhost:3030/evaluate';
 
-		
 	}
 
 	function getCookie(cname) {
@@ -462,8 +469,7 @@ div.container2 {
 							var cordid = sessionStorage.getItem("cordid");
 							$
 									.getJSON(
-											"/api/getcorddetails/"
-													+ cordid,
+											"/api/getcorddetails/" + cordid,
 											function(json) {
 												console.log(json);
 												$("#profile").empty();
