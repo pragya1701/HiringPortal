@@ -415,7 +415,7 @@ div.container2 {
 		document.cookie = "test_end" + "=" + globaldata[j].enddate;
 		document.cookie = "cord_id" + "=" + sessionStorage.getItem("cordid");
 
-		window.location.href = '/evaluate';
+		window.location.href = 'http://ec2-54-165-30-160.compute-1.amazonaws.com:3030/evaluate';
 
 	}
 
