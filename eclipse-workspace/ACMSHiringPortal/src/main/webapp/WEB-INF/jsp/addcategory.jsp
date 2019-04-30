@@ -152,7 +152,7 @@ div.container2 {
 }
 
 div.container2 {
-	margin-top: -672px;
+	margin-top: -672px	;
 	border: 3px solid #ffffff;
 	width: 250px;
 	height: 100%;
@@ -326,7 +326,7 @@ div.container2 {
 						Send Invite</a></li>
 				<li><a href="sendnotification"><i
 						class="fa fa-fw fa-envelope"></i> Send Notification</a></li>
-				<li><a href="login"><i class="fa fa-fw fa-user"></i> Logout
+				<li><a onclick="return logout();" href="login"><i class="fa fa-fw fa-user"></i> Logout
 				</a></li>
 			</ul>
 		</div>
@@ -387,7 +387,15 @@ div.container2 {
 </body>
 </html>
 <script>
-	
+	function logout(){
+		
+		$.ajax({
+			type : 'GET',
+			contentType : "application/json",
+			url : "/api/clearAll"
+		});
+		
+	}
 	function submitForm() {
 		$('#failure_p').hide();
 		$('#success_p').hide();
@@ -401,16 +409,17 @@ div.container2 {
 				contentType : "application/json",
 				url : "/api/addcategory",
 				data : formToJSON(),
-				success : function(data) {
-					console.log("data");
-					console.log("success");
-					alert("Category is added");
-					window.location.href="/corddashboard";
-				},
-				error : function(data) {
-					console.log("data");
-					console.log("error");
+				statusCode :  {
+					200: function() {
+						alert("Category is added");
+						window.location.href="/corddashboard";
+					},
+					201: function() {
+						alert("category name exist.")
+					}
+					
 				}
+				
 			});
 		}				
 	}
