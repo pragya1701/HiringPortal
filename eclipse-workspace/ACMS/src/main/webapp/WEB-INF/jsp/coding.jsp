@@ -27,9 +27,8 @@
 			<h4>Question:</h4>
 		</div>
 
-		<div style="border: 1px solid black; background-color:rgb(245, 245, 245);">
-			<span><p id="ques"></p>
-			</span>
+		<div class ="mw-80 shadow p-4 mb-4 bg-white">
+			<p id="ques"></p>
 		</div>
 		<br>
 
