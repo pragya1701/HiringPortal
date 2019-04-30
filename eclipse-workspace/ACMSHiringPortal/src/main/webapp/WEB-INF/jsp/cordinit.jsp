@@ -294,7 +294,8 @@ div.container2 {
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
 </head>
-<body onload="count(); StartTimers(); loadcorddetails(); return dropDownCategory();"
+<body
+	onload="count(); StartTimers(); loadcorddetails(); return dropDownCategory();"
 	onmousemove="ResetTimers();">
 	<div id="wrapper">
 		<!-- Sidebar -->
@@ -327,10 +328,11 @@ div.container2 {
 		<div class="sidebar">
 			<br> <br>
 			<ul>
-				<li><a href="cordinit"><i class="fa fa-fw fa-home"></i> Home</a></li>
+				<li><a href="cordinit"><i class="fa fa-fw fa-home"></i>
+						Home</a></li>
 				<li><a href="contactus"><i class="fa fa-fw fa-envelope"></i>
 						Contact</a></li>
-				<li><a href="login"><i class="fa fa-fw fa-user"></i> Logout
+				<li><a onclick="return logout();" href="login"><i class="fa fa-fw fa-user"></i> Logout
 				</a></li>
 			</ul>
 		</div>
@@ -391,9 +393,18 @@ div.container2 {
 </body>
 </html>
 <script>
-setTimeout(function() {
-	location.reload();
-}, 60000);
+	function logout() {
+
+		$.ajax({
+			type : 'GET',
+			contentType : "application/json",
+			url : "/api/clearAll"
+		});
+
+	}
+	setTimeout(function() {
+		location.reload();
+	}, 60000);
 
 	var catIDVal;
 	function submitForm() {
@@ -421,8 +432,8 @@ setTimeout(function() {
 			});
 		}
 	}
-	
-	function count(){
+
+	function count() {
 		$.ajax({
 			type : 'GET', // GET
 			contentType : "application/json",
@@ -550,8 +561,7 @@ setTimeout(function() {
 							var cordid = sessionStorage.getItem("cordid");
 							$
 									.getJSON(
-											"/api/getcorddetails/"
-													+ cordid,
+											"/api/getcorddetails/" + cordid,
 											function(json) {
 												console.log(json);
 												$("#profile").empty();
