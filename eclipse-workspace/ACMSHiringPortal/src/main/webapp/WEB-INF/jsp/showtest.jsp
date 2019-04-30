@@ -152,7 +152,7 @@ div.container2 {
 }
 
 div.container2 {
-	margin-top: -640px;
+	margin-top: -672px;
 	border: 3px solid #ffffff;
 	width: 250px;
 	height: 100%;
@@ -277,8 +277,9 @@ div.container2 {
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
 </head>
-<body onload="StartTimers(); loadcorddetails(); return loadQuestions()" onmousemove="ResetTimers();">
-	
+<body onload="StartTimers(); loadcorddetails(); return loadQuestions()"
+	onmousemove="ResetTimers();">
+
 	<div id="wrapper">
 		<!-- Sidebar -->
 		<div id="sidebar-wrapper">
@@ -288,24 +289,28 @@ div.container2 {
 		</div>
 	</div>
 	<div class="container1">
-	<h2 class="text-center" style="margin-top: 20px">Selected
+		<h2 class="text-center" style="margin-top: 20px">Selected
 			Questions</h2>
+		<h6 class="text-center">(Select questions to delete)</h6>
 		<ul class="list-group" id="uldisplay" onClick="checkBox()">
 		</ul>
-		<fieldset class="form-group">
-			<label for="testname" class="bmd-label-floating">Test name</label> <input
-				type="text" class="form-control" id="testname">
-		</fieldset>
-		<input type="button" value="Create Test" id="submit_button"
-			onclick="createTest()">
-		</div>
+		<form>
+			<fieldset class="form-group">
+				<label for="testname" class="bmd-label-floating">Test name</label> <input
+					type="text" class="form-control" id="testname" required>
+			</fieldset>
+			<input type="button" value="Create Test" id="submit_button"
+				onclick="createTest()">
+		</form>
 	</div>
+
 
 	<div class="container2">
 		<div class="sidebar">
 			<br> <br>
 			<ul>
-				<li><a href="cordinit"><i class="fa fa-fw fa-home"></i> Home</a></li>
+				<li><a href="cordinit"><i class="fa fa-fw fa-home"></i>
+						Home</a></li>
 				<li><a href="addmcqquestion"><i class="fa fa-fw fa-wrench"></i>
 						Add MCQ Question </a></li>
 				<li><a href="addcodequestion"><i class="fa fa-fw fa-wrench"></i>
@@ -318,7 +323,7 @@ div.container2 {
 						Send Invite</a></li>
 				<li><a href="sendnotification"><i
 						class="fa fa-fw fa-envelope"></i> Send Notification</a></li>
-				<li><a href="login"><i class="fa fa-fw fa-user"></i> Logout
+				<li><a onclick="return logout();" href="login"><i class="fa fa-fw fa-user"></i> Logout
 				</a></li>
 			</ul>
 		</div>
@@ -379,151 +384,157 @@ div.container2 {
 </body>
 </html>
 <script>
-function checkBox() {
-	var question = document.querySelector('input[name="cbox"]:checked').id;
-	console.log("inside checkbox");
-	console.log(question);
-	$("#"+question).remove();
-	$.ajax({
-		type : 'POST', // GET
-		contentType : "application/json",
-		url : "/api/question/"+question,
-		success : function(data) {
-			
-		},
-		error : function(data) {
-		
+	function logout() {
+
+		$.ajax({
+			type : 'GET',
+			contentType : "application/json",
+			url : "/api/clearAll"
+		});
+
+	}
+	function checkBox() {
+		var question = document.querySelector('input[name="cbox"]:checked').id;
+		console.log("inside checkbox");
+		console.log(question);
+		$("#" + question).remove();
+		$.ajax({
+			type : 'POST', // GET
+			contentType : "application/json",
+			url : "/api/question/" + question,
+			success : function(data) {
+
+			},
+			error : function(data) {
+
+			}
+		});
+	}
+
+	function loadQuestions() {
+		$('#failure_p').hide();
+		$('#success_p').hide();
+		var isvalidate = true;
+		if (isvalidate) {
+			$(document)
+					.ready(
+							function() {
+								$
+										.getJSON(
+												"/api/showtest",
+												function(json) {
+													$("#uldisplay").empty();
+													var tr = $("#uldisplay");
+													for (var i = 0; i < json.length; i++) {
+														tr
+																.append("<li class='list-group-item'"+ json[i].qid +"><ul role='listbox' tabindex='0' aria-label='email list'><input tabindex='-1' type='checkbox' name='cbox' id='" + json[i].qid + "' value='" + json[i].qid + "'>"
+																		+ json[i].question
+																		+ "</li></ul></li>");
+														console.log(tr);
+													}
+												});
+							});
+
 		}
-	});		
-}
+	}
 
-function loadQuestions() {   
-    $('#failure_p').hide();
-    $('#success_p').hide();
-    var isvalidate = true;
-    if (isvalidate) {
-        $(document)
-            .ready(
-                function() {
-                    $
-                        .getJSON(
-                            "/api/showtest",
-                            function(json) {
-                                $("#uldisplay").empty();
-                                var tr = $("#uldisplay");
-                                for (var i = 0; i < json.length; i++) {
-                                    tr
-                                        .append("<li class='list-group-item'"+ json[i].qid +"><ul role='listbox' tabindex='0' aria-label='email list'><input tabindex='-1' type='checkbox' name='cbox' id='" + json[i].qid + "' value='" + json[i].qid + "'>" +
-                                            json[i].question +
-                                            "</li></ul></li>");
-                                    console.log(tr);
-                                }
-                            });
-                });
+	function createTest() {
+		console.log("inside create Test");
 
-    }
-}
+		$.ajax({
+			type : 'POST', // GET
+			contentType : "application/json",
+			url : "/api/createtest/",
+			dataType : "json",
+			data : formToJSON(),
+			statusCode : {
+				200 : function() {
+					alert("Test successfully created.");
+					window.location.href = "/corddashboard";
+				},
+				201 : function() {
+					alert("Test name already exists.");
+				}
+			}
+		});
+	}
 
+	function checkBox() {
+		var question = document.querySelector('input[name="cbox"]:checked').id;
+		console.log("inside checkbox");
+		console.log(question);
+		$("#" + question).remove();
+		$.ajax({
+			type : 'POST', // GET
+			contentType : "application/json",
+			url : "/api/removequestion/" + question,
+			success : function(data) {
 
+			},
+			error : function(data) {
 
-function createTest() {
-	console.log("inside create Test");
-	
-	$.ajax({
-		type : 'POST', // GET
-		contentType : "application/json",
-		url : "/api/createtest/",
-		dataType : "json",
-		data : formToJSON(),
-		statusCode: {
-		    200: function() {
-		    	window.location.href="/corddashboard";
-		    },
-		    201: function() {
-		      	$('#success_p').hide();
-				$('#failure_p').show();
-		    }
-		  }
-	});		
-}
+			}
+		});
+	}
+	function formToJSON() {
+		var testname = document.getElementById("testname").value;
+		var cordid = sessionStorage.getItem("cordid");
+		var eqn = JSON.stringify({
+			"tname" : testname,
+			"cid" : cordid
+		});
+		return eqn;
+	}
 
-function checkBox() {
-	var question = document.querySelector('input[name="cbox"]:checked').id;
-	console.log("inside checkbox");
-	console.log(question);
-	$("#"+question).remove();
-	$.ajax({
-		type : 'POST', // GET
-		contentType : "application/json",
-		url : "/api/removequestion/"+question,
-		success : function(data) {
-			
-		},
-		error : function(data) {
-		
-		}
-	});		
-}
-function formToJSON() {
-	var testname = document.getElementById("testname").value;
-	var cordid = sessionStorage.getItem("cordid");
-	var eqn = JSON.stringify({
-		"tname" : testname,
-		"cid" : cordid
-	});
-	return eqn;
-}
+	var timoutWarning = 840000; // Display warning in 14 Mins.
+	var timoutNow = 900000; // Timeout in 15 mins.
+	var logoutUrl = '/login'; // URL to logout page.
 
-var timoutWarning = 840000; // Display warning in 14 Mins.
-var timoutNow = 900000; // Timeout in 15 mins.
-var logoutUrl = '/login'; // URL to logout page.
+	var warningTimer;
+	var timeoutTimer;
 
-var warningTimer;
-var timeoutTimer;
+	// Start timers.
+	function StartTimers() {
+		warningTimer = setTimeout(timoutWarning);
+		timeoutTimer = setTimeout("IdleTimeout()", timoutNow);
+	}
 
-// Start timers.
-function StartTimers() {
-    warningTimer = setTimeout(timoutWarning);
-    timeoutTimer = setTimeout("IdleTimeout()", timoutNow);
-}
+	// Reset timers.
+	function ResetTimers() {
+		clearTimeout(warningTimer);
+		clearTimeout(timeoutTimer);
+		StartTimers();
+	}
 
-// Reset timers.
-function ResetTimers() {
-    clearTimeout(warningTimer);
-    clearTimeout(timeoutTimer);
-    StartTimers();
-}
+	// Logout the user.
+	function IdleTimeout() {
+		alert("Session Timeout.... Please login again");
+		window.location = logoutUrl;
+	}
 
-// Logout the user.
-function IdleTimeout() {
-	alert("Session Timeout.... Please login again");
-    window.location = logoutUrl;
-}
-
-function loadcorddetails() {
-	console.log("inside coordinator details");
-	$(document)
-			.ready(
-					function() {
-						var cordid = sessionStorage.getItem("cordid");
-						$
-								.getJSON(
-										"/api/getcorddetails/"
-												+ cordid,
-										function(json) {
-											console.log(json);
-											$("#profile").empty();
-											var tr = $("#profile");
-											for (var i = 0; i < json.length; i++) {
-												tr
-														.append("<li class='list-group-item'>  <b>Username:</b> "
-																+ json[i].username
-																+ "</li><li class='list-group-item'>  <b>Phone:</b> "
-																+ json[i].phone
-																+ "</li>");
-												console.log(tr);
-											}
-										});
-					});
-}
+	function loadcorddetails() {
+		console.log("inside coordinator details");
+		$(document)
+				.ready(
+						function() {
+							var cordid = sessionStorage.getItem("cordid");
+							$
+									.getJSON(
+											"/api/getcorddetails/" + cordid,
+											function(json) {
+												console.log(json);
+												$("#profile").empty();
+												var tr = $("#profile");
+												for (var i = 0; i < json.length; i++) {
+													tr
+															.append("<li class='list-group-item'>  <b>Username:</b> "
+																	+ json[i].username
+																	+ "</li><li class='list-group-item'>  <b>Phone:</b> "
+																	+ json[i].phone
+																	+ "</li>");
+													console.log(tr);
+												}
+											});
+						});
+	}
 </script>
