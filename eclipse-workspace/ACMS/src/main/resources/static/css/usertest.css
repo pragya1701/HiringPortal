@@ -6,7 +6,7 @@ body {
 .sidenav {
 	position: fixed;
 	float: left;
-	width: 15%;
+	width: 16%;
 	height: 100vh;
 	padding: 15px;
 	padding-top: 20px;
@@ -28,14 +28,14 @@ body {
 .main {
 	margin-left: 15%;
 	float: left;
-	width: 77%; /* Same as the width of the sidenav */
+	width: 73%; /* Same as the width of the sidenav */
 	font-size: 28px; /* Increased text to enable scrolling */
 	padding: 15px;
 }
 
 #header {
 	float: left;
-	width: 8%;
+	width: 10%;
 	top: 0;
 	text-align: center; //
 	height: 30%;
