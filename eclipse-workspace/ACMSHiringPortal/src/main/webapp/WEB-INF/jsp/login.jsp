@@ -153,7 +153,8 @@ input[type=button]:hover {
 				</fieldset>
 
 				<input type="button" value="Login" id="submit_button"
-					onclick="submitForm()">
+					onclick="submitForm()"> <input type="button"
+					value="New User?  Contact Us" id="register" onclick="contact()">
 			</form>
 		</div>
 	</div>
@@ -172,6 +173,10 @@ input[type=button]:hover {
 </html>
 
 <script>
+
+	function contact(){
+		alert("please send email at hiring@gmail.com")
+	}
 	function submitForm() {
 		$('#failure_p').hide();
 		$('#success_p').hide();
@@ -211,7 +216,7 @@ input[type=button]:hover {
 			success : function(data) {
 				var semail = data;
 				console.log(semail);
-				sessionStorage.setItem("cordid","1");
+				sessionStorage.setItem("cordid",semail);
 				window.location.href="/cordinit";
 			},
 			error : function(data) {
