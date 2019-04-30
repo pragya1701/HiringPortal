@@ -326,10 +326,10 @@ div.container2 {
 		$(document)
 				.ready(
 						function() {
-							var semail = sessionStorage.getItem("semail");
+							var userid = sessionStorage.getItem("userid");
 							$
 									.getJSON(
-											"/api/getuserdetails/"+semail,
+											"/api/getuserdetails/"+userid,
 											function(json) {
 												console.log("data::"+json);
 												$("#uldisplay").empty();
@@ -337,6 +337,9 @@ div.container2 {
 														"userid", json[0].sid);
 												var tr = $("#uldisplay");
 												for (var i = 0; i < json.length; i++) {
+													sessionStorage.setItem(
+															"email", json[i].email);
+													 
 													tr
 															.append("<li class='list-group-item'>  <b>Username:</b> "
 																	+ json[i].username
@@ -359,10 +362,10 @@ div.container2 {
 		$(document)
 				.ready(
 						function() {
-							var semail = sessionStorage.getItem("semail");
+							var userid = sessionStorage.getItem("userid");
 							$
 									.getJSON(
-											"/api/getTests/"+semail,
+											"/api/getTests/"+userid,
 											function(json) {
 												$("#uldisplay").empty();
 												var tr = $("#uldisplay");
@@ -380,7 +383,7 @@ div.container2 {
 	function showUserHistory() {
 		console.log("inside Show Test");
 		var isvalidate = true;
-		var email = sessionStorage.getItem("semail");
+		var email = sessionStorage.getItem("email");
 
 		if (isvalidate) {
 			globalData = $
@@ -469,7 +472,6 @@ div.container2 {
 
 		var testing = sessionStorage.getItem("test_id");
 		console.log("Id----" + testing);
-		window.location.href = "mcqtest";
 		
 		$.ajax({
 			type : 'POST', 
@@ -482,6 +484,7 @@ div.container2 {
 			    },
 			    201: function() {
 			    	alert("Test Already Taken");
+			    	window.location.href = "userdashboard";
 			    }
 			  }
 		}); 
@@ -493,8 +496,8 @@ div.container2 {
 			"startdate" : sessionStorage.getItem("test_start"),
 			"enddate" : sessionStorage.getItem("test_end"),
 			"cordid" : sessionStorage.getItem("cord_id"),
-			"email" : "pragya.gupta26@gmail.com"
-		//sessionStorage.getItem("semail")
+			"email" : sessionStorage.getItem("email")
+		//sessionStorage.getItem("userid")
 		});
 		return eqn;
 	}
