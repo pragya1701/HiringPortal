@@ -152,7 +152,7 @@ div.container2 {
 }
 
 div.container2 {
-	margin-top: -672px;
+	margin-top:  -672px	;
 	border: 3px solid #ffffff;
 	width: 250px;
 	height: 100%;
@@ -337,10 +337,11 @@ div.container2 {
 		<div class="sidebar">
 			<br> <br>
 			<ul>
-				<li><a href="cordinit"><i class="fa fa-fw fa-home"></i> Home</a></li>
+				<li><a href="cordinit"><i class="fa fa-fw fa-home"></i>
+						Home</a></li>
 				<li><a href="contactus"><i class="fa fa-fw fa-envelope"></i>
 						Contact</a></li>
-				<li><a href="login"><i class="fa fa-fw fa-user"></i> Logout
+				<li><a onclick="return logout();" href="login"><i class="fa fa-fw fa-user"></i> Logout
 				</a></li>
 			</ul>
 		</div>
@@ -401,6 +402,15 @@ div.container2 {
 </body>
 </html>
 <script>
+	function logout() {
+
+		$.ajax({
+			type : 'GET',
+			contentType : "application/json",
+			url : "/api/clearAll"
+		});
+
+	}
 	function goPage(i) {
 		sessionStorage.setItem("level", i);
 		window.location.href = "corddashboard";
@@ -439,8 +449,7 @@ div.container2 {
 							var cordid = sessionStorage.getItem("cordid");
 							$
 									.getJSON(
-											"/api/getcorddetails/"
-													+ cordid,
+											"/api/getcorddetails/" + cordid,
 											function(json) {
 												console.log(json);
 												$("#profile").empty();
