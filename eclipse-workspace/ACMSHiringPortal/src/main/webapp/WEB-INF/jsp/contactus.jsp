@@ -152,7 +152,7 @@ div.container2 {
 }
 
 div.container2 {
-	margin-top: -672px;
+	margin-top:  -672px	;
 	border: 3px solid #ffffff;
 	width: 250px;
 	height: 100%;
@@ -277,35 +277,41 @@ div.container2 {
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
 </head>
-<body onload="StartTimers(); return loadcorddetails();" onmousemove="ResetTimers();">
-	
+<body onload="StartTimers(); return loadcorddetails();"
+	onmousemove="ResetTimers();">
+
 	<div id="wrapper">
 		<!-- Sidebar -->
 		<div id="sidebar-wrapper">
 			<div class="bg-image"></div>
 			<ul class="list-group" id="profile" onClick="checkBox()">
-			</ul>s
+			</ul>
+			s
 		</div>
 	</div>
 	<div class="container1">
-	
+
 		<div style="text-align: center">
-			<h2><i>Contact Us</i></h2>
+			<h2>
+				<i>Contact Us</i>
+			</h2>
 		</div>
-			<div class="column">
-				<h3>Phone</h3>
-				<h5>9022122222</h5>
-				<br><Br>
-				<h3>Email</h3>
-				<h5>hiring@gmail.com</h5>
-			</div>
+		<div class="column">
+			<h3>Phone</h3>
+			<h5>9022122222</h5>
+			<br>
+			<Br>
+			<h3>Email</h3>
+			<h5>hiring@gmail.com</h5>
+		</div>
 	</div>
 
 	<div class="container2">
 		<div class="sidebar">
 			<br> <br>
 			<ul>
-				<li><a href="cordinit"><i class="fa fa-fw fa-home"></i> Home</a></li>
+				<li><a href="cordinit"><i class="fa fa-fw fa-home"></i>
+						Home</a></li>
 				<li><a href="addmcqquestion"><i class="fa fa-fw fa-wrench"></i>
 						Add MCQ Question </a></li>
 				<li><a href="addcodequestion"><i class="fa fa-fw fa-wrench"></i>
@@ -318,7 +324,7 @@ div.container2 {
 						Send Invite</a></li>
 				<li><a href="sendnotification"><i
 						class="fa fa-fw fa-envelope"></i> Send Notification</a></li>
-				<li><a href="login"><i class="fa fa-fw fa-user"></i> Logout
+				<li><a onclick="return logout();" href="login"><i class="fa fa-fw fa-user"></i> Logout
 				</a></li>
 			</ul>
 		</div>
@@ -379,56 +385,64 @@ div.container2 {
 </body>
 </html>
 <script>
-var timoutWarning = 840000; // Display warning in 14 Mins.
-var timoutNow = 900000; // Timeout in 15 mins.
-var logoutUrl = '/login'; // URL to logout page.
+	function logout() {
 
-var warningTimer;
-var timeoutTimer;
+		$.ajax({
+			type : 'GET',
+			contentType : "application/json",
+			url : "/api/clearAll"
+		});
 
-// Start timers.
-function StartTimers() {
-    warningTimer = setTimeout(timoutWarning);
-    timeoutTimer = setTimeout("IdleTimeout()", timoutNow);
-}
+	}
+	var timoutWarning = 840000; // Display warning in 14 Mins.
+	var timoutNow = 900000; // Timeout in 15 mins.
+	var logoutUrl = '/login'; // URL to logout page.
 
-// Reset timers.
-function ResetTimers() {
-    clearTimeout(warningTimer);
-    clearTimeout(timeoutTimer);
-    StartTimers();
-}
+	var warningTimer;
+	var timeoutTimer;
 
-// Logout the user.
-function IdleTimeout() {
-	alert("Session Timeout.... Please login again");
-    window.location = logoutUrl;
-}
+	// Start timers.
+	function StartTimers() {
+		warningTimer = setTimeout(timoutWarning);
+		timeoutTimer = setTimeout("IdleTimeout()", timoutNow);
+	}
 
-function loadcorddetails() {
-	console.log("inside coordinator details");
-	$(document)
-			.ready(
-					function() {
-						var cordid = sessionStorage.getItem("cordid");
-						$
-								.getJSON(
-										"/api/getcorddetails/"
-												+ cordid,
-										function(json) {
-											console.log(json);
-											$("#profile").empty();
-											var tr = $("#profile");
-											for (var i = 0; i < json.length; i++) {
-												tr
-														.append("<li class='list-group-item'>  <b>Username:</b> "
-																+ json[i].username
-																+ "</li><li class='list-group-item'>  <b>Phone:</b> "
-																+ json[i].phone
-																+ "</li>");
-												console.log(tr);
-											}
-										});
-					});
-}
+	// Reset timers.
+	function ResetTimers() {
+		clearTimeout(warningTimer);
+		clearTimeout(timeoutTimer);
+		StartTimers();
+	}
+
+	// Logout the user.
+	function IdleTimeout() {
+		alert("Session Timeout.... Please login again");
+		window.location = logoutUrl;
+	}
+
+	function loadcorddetails() {
+		console.log("inside coordinator details");
+		$(document)
+				.ready(
+						function() {
+							var cordid = sessionStorage.getItem("cordid");
+							$
+									.getJSON(
+											"/api/getcorddetails/" + cordid,
+											function(json) {
+												console.log(json);
+												$("#profile").empty();
+												var tr = $("#profile");
+												for (var i = 0; i < json.length; i++) {
+													tr
+															.append("<li class='list-group-item'>  <b>Username:</b> "
+																	+ json[i].username
+																	+ "</li><li class='list-group-item'>  <b>Phone:</b> "
+																	+ json[i].phone
+																	+ "</li>");
+													console.log(tr);
+												}
+											});
+						});
+	}
 </script>
