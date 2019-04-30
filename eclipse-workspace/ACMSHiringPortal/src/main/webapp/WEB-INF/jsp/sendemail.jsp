@@ -65,39 +65,58 @@ input[type=button]:hover {
 body, html {
 	height: 100%;
 }
+
 md-input-container
 
 
+
+
 :not
+
+
 
 
 (
 .md-input-has-value
 
+
  
+
 
 )
 input
 
 
+
+
 :not
+
+
 
 
 (
 :focus
 
+
  
+
 
 )
 {
 color
 
 
+
+
 :
+
 
  
 
+
 transparent
+
+
 
 
 ;
@@ -342,7 +361,8 @@ div.container2 {
 		<textarea rows="10" cols="74" id="emailarea"
 			placeholder="please enter comma(,) separated email addresses"
 			required></textarea>
-			<h6 class="text-center">(Kindly add Email address before sending an email.)</h6>
+		<h6 class="text-center">(Kindly add Email address before sending
+			an email.)</h6>
 		<input type="button" value="Add Email Addresses" id="submit_button"
 			onclick="addEmail()"> <input type="button" value="Send Email"
 			id="submit_button" onclick="getTestID()">
@@ -351,11 +371,12 @@ div.container2 {
 		<div class="sidebar">
 			<br> <br>
 			<ul>
-				<li><a href="cordinit"><i class="fa fa-fw fa-home"></i> Home</a></li>
+				<li><a href="cordinit"><i class="fa fa-fw fa-home"></i>
+						Home</a></li>
 				<li><a href="contactus"><i class="fa fa-fw fa-envelope"></i>
 						Contact</a></li>
-				<li><a href="login"><i class="fa fa-fw fa-user"></i> Logout
-				</a></li>
+					<li><a onclick="return logout();" href="login"><i
+						class="fa fa-fw fa-user"></i> Logout </a></li>
 			</ul>
 		</div>
 	</div>
@@ -415,6 +436,15 @@ div.container2 {
 </body>
 </html>
 <script>
+	function logout() {
+
+		$.ajax({
+			type : 'GET',
+			contentType : "application/json",
+			url : "/api/clearAll"
+		});
+
+	}
 	var testIDVal;
 	function seachOrganization() {
 		if (document.querySelector('input[name="org"]:checked').value != "null") {
@@ -528,7 +558,7 @@ div.container2 {
 				200 : function() {
 					console.log("success");
 					alert("Email sent");
-					window.location.href="/corddashboard";
+					window.location.href = "/corddashboard";
 				},
 				201 : function() {
 					console.log("error");
@@ -546,23 +576,17 @@ div.container2 {
 		console.log("inside the method");
 		var isvalidate = true;
 		if (isvalidate) {
-			$(document)
-					.ready(
-							function() {
-								$
-										.getJSON(
-												"/api/alltests",
-												function(json) {
-													$("#testdrop").empty();
-													var tr = $("#testdrop");
-													for (var i = 0; i < json.length; i++) {
-														tr
-																.append("<option value='"+json[i].tname+"''>"
-																		+ json[i].tname
-																		+ "</option>");
-													}
-												});
-							});
+			$(document).ready(
+					function() {
+						$.getJSON("/api/alltests", function(json) {
+							$("#testdrop").empty();
+							var tr = $("#testdrop");
+							for (var i = 0; i < json.length; i++) {
+								tr.append("<option value='"+json[i].tname+"''>"
+										+ json[i].tname + "</option>");
+							}
+						});
+					});
 
 		}
 	}
@@ -643,8 +667,7 @@ div.container2 {
 							var cordid = sessionStorage.getItem("cordid");
 							$
 									.getJSON(
-											"/api/getcorddetails/"
-													+ cordid,
+											"/api/getcorddetails/" + cordid,
 											function(json) {
 												console.log(json);
 												$("#profile").empty();
